@@ -9960,13 +9960,17 @@ async function ingestPaths({paths, fileLoadHandler}) {
         const dataPaths = [];
         for (let path of paths) {
 
+            console.info(`Path: ${path}`)
             const name = await MultipleTrackFileLoad.getFilename(path);
             const extension = getExtension(name);
+            console.info(`Name: ${name}`)
+            console.info(`Extension: ${extension}`)
 
             if (indexExtensions.has(extension)) {
 
                 // key is the data file name
                 const key = createIndexLUTKey(name, extension);
+                console.info(`Key: ${key}`)
                 indexLUT.set(key, {
                     indexURL: path,
                     indexFilename: MultipleTrackFileLoad.isGoogleDrivePath(path) ? name : undefined
@@ -10013,6 +10017,7 @@ const requireIndex = new Set(['bam', 'cram', 'fa', 'fasta']);
 const createIndexLUTKey = (name, extension) => {
 
     let key = name.substring(0, name.length - (extension.length + 1));
+    console.info(`key ${key}`)
 
     // bam and cram files (.bai, .crai) have 2 conventions:
     // <data>.bam.bai
